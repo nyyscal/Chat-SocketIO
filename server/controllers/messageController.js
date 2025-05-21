@@ -3,6 +3,7 @@
 import cloudinary from "../lib/cloudinary.js";
 import Message from "../models/Message.js";
 import User from "../models/User.js"
+import { io, userScoketMap } from "../server.js";
 
 export const getUsersForSidebar = async(req,res)=>{
   try {
@@ -93,6 +94,13 @@ export const sendMessage = async(req,res)=>{
       senderId,
       receiverId
     })
+
+    //emit new message to receiver's socket
+    const receiverSocketId = userScoketMap[receiverId]
+
+    if(receiverSocketId){
+      io.to(receiverSocketId).emit("newMessage",newMessage)
+    }
 
     res.json({success:true,newMessage})
 
