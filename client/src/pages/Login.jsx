@@ -26,7 +26,7 @@ const Login = () => {
           {isDataSubmitted && <img onClick={()=>setIsDataSubmitted(false)} src={assets.arrow_icon} alt="arrow" className='w-5 cursor-pointer' />}
         </h2>
 
-        {currentState === "Sign Up" && !isDataSubmitted  && (<input type="text" className='p-2 border border-gray-500 rounded-md focus:outline-none' onChange={(e)=>setFullName(e.target.value)} placeholder='Full Name' required/>
+        {currentState === "Sign Up" && !isDataSubmitted  && (<input value={fullName} type="text" className='p-2 border border-gray-500 rounded-md focus:outline-none' onChange={(e)=>setFullName(e.target.value)} placeholder='Full Name' required/>
       )}
       {
         !isDataSubmitted && (
