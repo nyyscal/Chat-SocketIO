@@ -4,6 +4,7 @@ import cors from "cors"
 import http from "http"
 import { connectDB } from "./lib/connectDB.js"
 import userRouter from "./routes/userRoutes.js"
+import messageRouter from "./routes/messageRouter.js"
 
 const app = express()
 
@@ -19,6 +20,7 @@ app.use("/api/status",(req,res)=>{
 })
 
 app.use("/api/auth",userRouter)
+app.use("/api/messages",messageRouter)
 
 await connectDB()
 const PORT = process.env.PORT || 3000
