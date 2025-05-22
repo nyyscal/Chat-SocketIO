@@ -2,8 +2,6 @@ import { createContext, useEffect, useState } from "react";
 import axios from "axios"
 import toast from "react-hot-toast";
 import { io } from "socket.io-client"
-import { useNavigate } from "react-router-dom";
-
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL
 console.log(backendUrl)
@@ -13,8 +11,6 @@ export const AuthContext = createContext()
 
 export const AuthProvider = ({children}) =>{
   
-  const navigate = useNavigate()
-
   const [token,setToken] = useState(localStorage.getItem("token"))
   const [authUser,setAuthUser] = useState(null)
   const [onlineUser,setOnlineUser] = useState([])
@@ -37,20 +33,22 @@ export const AuthProvider = ({children}) =>{
     try {
       const {data} = await axios.post(`/api/auth/${state}`,credentials)
       if(data.success){
-        setAuthUser(data.user)
+        setAuthUser(data.user || data.userData)
         connectSocket(data.user)
         axios.defaults.headers.common["token"] = data.token
         setToken(data.token)
         localStorage.setItem("token",data.token)
         toast.success(data.message)
-        navigate("/")
         console.log("Attempting logging in")
+        return true
       }else{
         toast.error(data.message)
+        return false
       }
     } catch (error) {
       console.log(error)
       toast.error(error.message)
+      return false
 
     }
   }

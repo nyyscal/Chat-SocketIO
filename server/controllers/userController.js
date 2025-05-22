@@ -26,7 +26,7 @@ export const signup = async(req,res)=>{
 
     const token = generateToken(newUser._id)
 
-    res.json({success:true,userData:newUser,token,message:"Account created succesfully."})
+    res.json({success:true,user:newUser,token,message:"Account created succesfully."})
   } catch (error) {
     console.log("Error in signup controller",error)
     res.status(500).json({success:false,message:"Internal Server Error"})
@@ -43,7 +43,7 @@ export const login = async(req,res)=>{
       return res.status(400).json({message:"Invalid credentials",success:false})
     }
     const token = generateToken(userData._id)
-    res.json({success:true,userData,token,message:"Login successful"})
+    res.json({success:true,user:userData,token,message:"Login successful"})
   } catch (error) {
     console.log("Error in login controller",error)
     res.status(500).json({success:false,message:"Internal Server Error"}) 
