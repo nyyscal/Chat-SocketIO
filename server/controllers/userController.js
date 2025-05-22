@@ -11,7 +11,7 @@ export const signup = async(req,res)=>{
     if(!fullName || !email || !password || !bio){
       return res.status(400).json({message:"Please fill all the fields.",success:false})
     }
-    const exisitngUser = await User.findOne(email);
+    const exisitngUser = await User.findOne({email});
     if(exisitngUser){
       return res.status(400).json({message:"Account already exists",success:false})
     }
@@ -73,4 +73,20 @@ export const updateProfile = async(req,res)=>{
     res.status(500).json({success:false,message:"Internal Server Error"})
   }
 }
+
+// Logout controller
+export const logout = async (req, res) => {
+  try {
+    res.status(200).json({
+      success: true,
+      message: "Logged out successfully",
+    });
+  } catch (error) {
+    console.log("Error in logout controller", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to logout. Please try again.",
+    });
+  }
+};
 
