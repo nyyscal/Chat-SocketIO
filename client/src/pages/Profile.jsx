@@ -2,6 +2,8 @@ import React, { useContext, useState } from 'react'
 import assets from '../assets/assets'
 import {useNavigate} from 'react-router-dom'
 import { AuthContext } from '../../context/AuthContext'
+import { FaArrowLeft } from "react-icons/fa";
+
 
 const Profile = () => {
 
@@ -11,7 +13,6 @@ const Profile = () => {
   const [name,setName] = useState(authUser?.fullName)
   const [bio,setBio] = useState(authUser?.bio)
   const navigate = useNavigate()
-
 
   const handleSubmit = async(e)=>{
     e.preventDefault();
@@ -34,7 +35,11 @@ const Profile = () => {
       <div className='w-5/6 max-w-2xl backdrop-blur-2xl text-gray-300 border-2 border-gray-600 flex items-center justify-between max-sm:flex-col-reverse rounded-lg'>
       {/* Bio */}
         <form onSubmit={handleSubmit} className='flex flex-col gap-5 p-10 flex-1'>
+          <div className='flex  justify-center items-center gap-4'>
           <h3 className='text-lg'>Profile Details</h3>
+          <FaArrowLeft onClick={()=>navigate("/")} className='cursor-pointer'/>
+          </div>
+          
           <label htmlFor="avatar" className='flex items-center gap-3 cursor-pointer'>
             <input onChange={(e)=>setSelectedImage(e.target.files[0])} type="file" id="avatar"accept='.jpg .jpeg 
             .png' hidden />
